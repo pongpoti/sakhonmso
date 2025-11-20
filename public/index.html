@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>sakhonmso@gmail.com</title>
+    <title>สถานะการส่ง P4P</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
             font-family: "Noto Sans Thai Looped", sans-serif;
         }
 
-        #progress {
+        #tablebox {
             display: none;
         }
     </style>
@@ -24,15 +24,22 @@
 
 <body>
     <!--header-->
-    <div class="navbar bg-base-200 shadow-sm sticky top-0 flex justify-center z-10 mb-8">
-        <p class="text-center text-lg">sakhonmso@gmail.com</p>
+    <div class="navbar bg-base-200 shadow-sm sticky top-0 flex justify-between w-full z-10 mb-8">
+        <label class="input ml-4 w-40">
+            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </g>
+            </svg>
+            <input type="search" required placeholder="ค้นหาชื่อแพทย์" />
+        </label>
+        <p id="count" class="skeleton skeleton-text m-2 text-sm">รวบรวมข้อมูล...</p>
     </div>
     <!--content-->
-    <div class="grid grid-cols-1 justify-items-center z-0">
+    <div class="grid grid-cols-1 justify-items-center">
         <div id="load" class="loading loading-bars loading-md m-2"></div>
-        <progress id="progress" class="progress w-60 m-2"></progress>
-        <p id="count" class="m-2"></p>
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-2">
+        <div id="tablebox" class="w-auto overflow-x-auto rounded-box border bg-base-100 m-2">
             <table class="table">
                 <tbody id="tbody"></tbody>
             </table>
@@ -41,8 +48,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
     <script>
         const load = document.getElementById("load")
-        const progress = document.getElementById("progress")
         const count = document.getElementById("count")
+        const tablebox = document.getElementById("tablebox")
         const tbody = document.getElementById("tbody")
         const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
         let param = "2568_10"
@@ -50,40 +57,39 @@
         let count_true = 0
         axios.get(url + query + param)
             .then(response => {
+                count.classList.remove("skeleton", "skeleton-text")
                 load.style.display = "none"
-                progress.style.display = "block"
+                tablebox.style.display = "block"
                 const data = response.data
                 for (i = 0; i < data.length; i++) {
                     let tr = document.createElement("tr")
-                    //
                     let td1 = document.createElement("td")
                     let div = document.createElement("div")
                     div.classList.add("grid", "grid-cols-1")
                     let p1 = document.createElement("p")
                     p1.innerText = data[i][1] + "  (" + data[i][0] + ")"
-                    p1.classList.add("text-md", "text-black")
+                    p1.classList.add("text-lg")
                     let p2 = document.createElement("p")
                     p2.innerText = data[i][2]
-                    p2.classList.add("text-sm", "text-gray")
+                    p2.classList.add("text-sm", "text-gray-600")
                     div.appendChild(p1)
                     div.appendChild(p2)
                     td1.appendChild(div)
-                    //    
                     let td2 = document.createElement("td")
                     if (data[i][3]) {
                         count_true += 1
                         td2.innerText = "ส่งแล้ว"
+                        td2.classList.add("text-lg")
                     } else {
-                        tr.classList.add("bg-base-300")
                         td2.innerText = "ยังไม่ส่ง"
+                        td2.classList.add("text-lg")
+                        tr.classList.add("bg-base-300")
                     }
                     tr.appendChild(td1)
                     tr.appendChild(td2)
                     tbody.appendChild(tr)
                 }
-                progress.value = count_true
-                progress.max = data.length
-                count.innerText = "(ส่งแล้ว  " + count_true + "  ราย จาก  " + data.length + "  ราย)"
+                count.innerText = "(ส่งแล้ว " + count_true + " จาก " + data.length + " ราย)"
             }
             )
 
