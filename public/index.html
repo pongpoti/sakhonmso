@@ -3,8 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>sakhonmso@gmail.com</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@100..900&display=swap"
@@ -13,29 +15,75 @@
         body {
             font-family: "Noto Sans Thai Looped", sans-serif;
         }
+
+        #progress {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <p id="load">loading</p>
-    <p id="p"></p>
+    <!--header-->
+    <div class="navbar bg-base-200 shadow-sm sticky top-0 flex justify-center z-10 mb-8">
+        <p class="text-center text-lg">sakhonmso@gmail.com</p>
+    </div>
+    <!--content-->
+    <div class="grid grid-cols-1 justify-items-center z-0">
+        <div id="load" class="loading loading-bars loading-md m-2"></div>
+        <progress id="progress" class="progress w-60 m-2"></progress>
+        <p id="count" class="m-2"></p>
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-2">
+            <table class="table">
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
     <script>
         const load = document.getElementById("load")
-        const p = document.getElementById("p")
+        const progress = document.getElementById("progress")
+        const count = document.getElementById("count")
+        const tbody = document.getElementById("tbody")
         const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
         let param = "2568_10"
         let query = "?date="
+        let count_true = 0
         axios.get(url + query + param)
             .then(response => {
                 load.style.display = "none"
+                progress.style.display = "block"
                 const data = response.data
                 for (i = 0; i < data.length; i++) {
-                    let sub = document.createElement("p")
-                    sub.innerText = data[i]
-                    p.appendChild(sub)
+                    let tr = document.createElement("tr")
+                    //
+                    let td1 = document.createElement("td")
+                    let div = document.createElement("div")
+                    div.classList.add("grid", "grid-cols-1")
+                    let p1 = document.createElement("p")
+                    p1.innerText = data[i][1] + "  (" + data[i][0] + ")"
+                    p1.classList.add("text-md", "text-black")
+                    let p2 = document.createElement("p")
+                    p2.innerText = data[i][2]
+                    p2.classList.add("text-sm", "text-gray")
+                    div.appendChild(p1)
+                    div.appendChild(p2)
+                    td1.appendChild(div)
+                    //    
+                    let td2 = document.createElement("td")
+                    if (data[i][3]) {
+                        count_true += 1
+                        td2.innerText = "ส่งแล้ว"
+                    } else {
+                        tr.classList.add("bg-base-300")
+                        td2.innerText = "ยังไม่ส่ง"
+                    }
+                    tr.appendChild(td1)
+                    tr.appendChild(td2)
+                    tbody.appendChild(tr)
                 }
-
+                progress.value = count_true
+                progress.max = data.length
+                count.innerText = "(ส่งแล้ว  " + count_true + "  ราย จาก  " + data.length + "  ราย)"
             }
             )
 
