@@ -24,25 +24,31 @@
 
 <body>
     <!--header-->
-    <div class="navbar bg-base-200 shadow-sm sticky top-0 flex justify-between w-full z-10 mb-8">
-        <label class="input ml-4 w-40">
-            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                </g>
-            </svg>
-            <input type="search" required placeholder="ค้นหาชื่อแพทย์" />
-        </label>
-        <p id="count" class="skeleton skeleton-text m-2 text-sm">รวบรวมข้อมูล...</p>
+    <div class="navbar bg-base-200 shadow-sm sticky flex flex-col align-center top-0 z-10 mb-4 pt-0">
+        <p class="bg-base-300 w-screen mb-2 p-2 text-center text-lg font-semibold">ตุลาคม 2568</p>
+        <div class="flex justify-between w-full">
+            <label class="input ml-4 w-40">
+                <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                        stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input type="search" required placeholder="ค้นหาชื่อแพทย์" />
+            </label>
+            <p id="count" class="skeleton skeleton-text m-2 text-sm">รวบรวมข้อมูล...</p>
+        </div>
     </div>
     <!--content-->
-    <div class="grid grid-cols-1 justify-items-center">
-        <div id="load" class="loading loading-bars loading-md m-2"></div>
-        <div id="tablebox" class="w-auto overflow-x-auto rounded-box border bg-base-100 m-2">
-            <table class="table">
-                <tbody id="tbody"></tbody>
-            </table>
+    <div class="flex flex-col align-center">
+        <div class="grid grid-cols-1 justify-items-center">
+            <div id="load" class="loading loading-bars loading-md m-2"></div>
+            <div id="tablebox" class="w-auto overflow-x-auto rounded-box border bg-base-100 m-2">
+                <table class="table">
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
@@ -79,10 +85,10 @@
                     if (data[i][3]) {
                         count_true += 1
                         td2.innerText = "ส่งแล้ว"
-                        td2.classList.add("text-md")
+                        td2.classList.add("text-base")
                     } else {
                         td2.innerText = "ยังไม่ส่ง"
-                        td2.classList.add("text-md")
+                        td2.classList.add("text-base")
                         tr.classList.add("bg-base-300")
                     }
                     tr.appendChild(td1)
