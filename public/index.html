@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: "Noto Sans Thai Looped", sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="load">loading</p>
+    <p id="p"></p>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+    <script>
+        const load = document.getElementById("load")
+        const p = document.getElementById("p")
+        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
+        let param = "2568_10"
+        let query = "?date="
+        axios.get(url + query + param)
+            .then(response => {
+                load.style.display = "none"
+                const data = response.data
+                for (i = 0; i < data.length; i++) {
+                    let sub = document.createElement("p")
+                    sub.innerText = data[i]
+                    p.appendChild(sub)
+                }
+
+            }
+            )
+
+    </script>
+</body>
+
+</html>
