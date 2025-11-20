@@ -67,10 +67,10 @@
                     let div = document.createElement("div")
                     div.classList.add("grid", "grid-cols-1")
                     let p1 = document.createElement("p")
-                    p1.innerText = data[i][1] + "  (" + data[i][0] + ")"
+                    p1.innerText = data[i][1]
                     p1.classList.add("text-lg")
                     let p2 = document.createElement("p")
-                    p2.innerText = data[i][2]
+                    p2.innerText = data[i][0] + " | " + data[i][2]
                     p2.classList.add("text-sm", "text-gray-600")
                     div.appendChild(p1)
                     div.appendChild(p2)
@@ -79,10 +79,10 @@
                     if (data[i][3]) {
                         count_true += 1
                         td2.innerText = "ส่งแล้ว"
-                        td2.classList.add("text-lg")
+                        td2.classList.add("text-md")
                     } else {
                         td2.innerText = "ยังไม่ส่ง"
-                        td2.classList.add("text-lg")
+                        td2.classList.add("text-md")
                         tr.classList.add("bg-base-300")
                     }
                     tr.appendChild(td1)
