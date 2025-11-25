@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <button type="button" id="btn-back-to-top"
+    <button type="button" id="backtotop"
         class="z-10 fixed bottom-2 right-2 rounded-full shadow-md focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out hidden">
         <svg class="size-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
             <path fill="#545454"
@@ -86,39 +86,31 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
     <script>
-
-        // Get the button element
-        const mybutton = document.getElementById("btn-back-to-top");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        const scrollFunction = () => {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.classList.remove("hidden");
-            } else {
-                mybutton.classList.add("hidden");
-            }
-        };
-
-        // When the user clicks on the button, scroll to the top of the document smoothly
-        const backToTop = () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth" // Provides a smooth scrolling experience
-            });
-        };
-
-        // Add event listeners
-        window.addEventListener("scroll", scrollFunction);
-        mybutton.addEventListener("click", backToTop);
-
-
-
         const load = document.getElementById("load")
         const count = document.getElementById("count")
         const pending = document.getElementById("pending")
         const sent = document.getElementById("sent")
         const tbody_pending = document.getElementById("tbody_pending")
         const tbody_sent = document.getElementById("tbody_sent")
+        const backtotop = document.getElementById("backtotop");
+
+        const scrolling = () => {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backtotop.classList.remove("hidden");
+            } else {
+                backtotop.classList.add("hidden");
+            }
+        };
+        const topping = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        };
+
+        window.addEventListener("scroll", scrolling);
+        backtotop.addEventListener("click", topping);
+
         const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
         let param = "2568_10"
         let query = "?date="
