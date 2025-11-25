@@ -17,6 +17,8 @@
             font-family: "Noto Sans Thai Looped", sans-serif;
         }
 
+        #header,
+        #content,
         #pending,
         #sent {
             display: none;
@@ -26,7 +28,7 @@
 
 <body>
     <!--header-->
-    <div class="navbar bg-base-200 shadow-md sticky flex flex-col align-center top-0 z-10 mb-8 pt-0">
+    <div id="header" class="navbar bg-base-200 shadow-md sticky flex flex-col align-center top-0 z-10 mb-8 pt-0">
         <div class="flex items-center w-screen">
             <div class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold">ตุลาคม 2568</div>
             <div id="count" class="bg-base-200 w-1/2 p-2 pr-4 text-right text-md skeleton skeleton-text">รวบรวมข้อมูล..
@@ -46,7 +48,7 @@
         </div>
     </div>
     <!--content-->
-    <div class="grid grid-cols-1 justify-items-center mx-4">
+    <div id="content" class="grid grid-cols-1 justify-items-center mx-4">
         <div id="load" class="loading loading-bars loading-md"></div>
         <div id="pending" class="collapse collapse-arrow border bg-red-300 mb-4">
             <input type="checkbox" />
@@ -80,8 +82,12 @@
         </svg>
     </button>
 
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+
     <script>
+        const header = document.getElementById("header")
+        const content = document.getElementById("content")
         const load = document.getElementById("load")
         const count = document.getElementById("count")
         const pending = document.getElementById("pending")
@@ -107,49 +113,70 @@
         window.addEventListener("scroll", scrolling);
         backtotop.addEventListener("click", topping);
 
-        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
-        let param = "2568_10"
-        let query = "?date="
-        let count_true = 0
-        axios.get(url + query + param)
-            .then(response => {
-                count.classList.remove("skeleton", "skeleton-text")
-                load.style.display = "none"
-                pending.style.display = "grid"
-                sent.style.display = "grid"
-                const data = response.data
-                for (i = 0; i < data.length; i++) {
-                    let tr = document.createElement("tr")
-                    let td_name = document.createElement("td")
-                    let div = document.createElement("div")
-                    div.classList.add("grid", "grid-cols-1")
-                    let p1 = document.createElement("p")
-                    p1.innerText = data[i][1]
-                    p1.classList.add("text-lg")
-                    let p2 = document.createElement("p")
-                    p2.innerText = data[i][0] + " | " + data[i][2]
-                    p2.classList.add("text-sm", "text-gray-600")
-                    div.appendChild(p1)
-                    div.appendChild(p2)
-                    tr.appendChild(td_name).appendChild(div)
-                    let td_status = document.createElement("td")
-                    let icon = document.createElement("i")
-                    if (data[i][3]) {
-                        count_true += 1
-                        icon.classList.add("fa-solid", "fa-check")
-                        td_status.appendChild(icon)
-                        td_status.classList.add("text-base")
-                        tbody_sent.appendChild(tr).appendChild(td_status)
+        const longInLIFF = async () => {
+            if (window.innerWidth < 481) {
+                await liff.init({
+                    liffId: "2008561527-a0xP1XmY"
+                })
+                if (liff.isInClient()) {
+                    if (liff.isLoggedIn()) {
+                        header.style.display = "flex"
+                        content.style.display = "grid"
+                        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
+                        let param = "2568_8"
+                        let query = "?date="
+                        let count_true = 0
+                        axios.get(url + query + param)
+                            .then(response => {
+                                count.classList.remove("skeleton", "skeleton-text")
+                                load.style.display = "none"
+                                pending.style.display = "grid"
+                                sent.style.display = "grid"
+                                const data = response.data
+                                for (i = 0; i < data.length; i++) {
+                                    let tr = document.createElement("tr")
+                                    let td_name = document.createElement("td")
+                                    let div = document.createElement("div")
+                                    div.classList.add("grid", "grid-cols-1")
+                                    let p1 = document.createElement("p")
+                                    p1.innerText = data[i][1]
+                                    p1.classList.add("text-lg")
+                                    let p2 = document.createElement("p")
+                                    p2.innerText = data[i][0] + " | " + data[i][2]
+                                    p2.classList.add("text-sm", "text-gray-600")
+                                    div.appendChild(p1)
+                                    div.appendChild(p2)
+                                    tr.appendChild(td_name).appendChild(div)
+                                    let td_status = document.createElement("td")
+                                    let icon = document.createElement("i")
+                                    if (data[i][3]) {
+                                        count_true += 1
+                                        icon.classList.add("fa-solid", "fa-check")
+                                        td_status.appendChild(icon)
+                                        td_status.classList.add("text-base")
+                                        tbody_sent.appendChild(tr).appendChild(td_status)
+                                    } else {
+                                        icon.classList.add("fa-solid", "fa-xmark")
+                                        td_status.appendChild(icon)
+                                        td_status.classList.add("text-base")
+                                        tbody_pending.appendChild(tr).appendChild(td_status)
+                                    }
+                                }
+                                count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
+                            }
+                            )
                     } else {
-                        icon.classList.add("fa-solid", "fa-xmark")
-                        td_status.appendChild(icon)
-                        td_status.classList.add("text-base")
-                        tbody_pending.appendChild(tr).appendChild(td_status)
+                        liff.login({ redirectUri: "https://sakhonmso.vercel.app" })
                     }
+                } else {
+                    window.location.replace("https://sakhonmso.vercel.app/external")
                 }
-                count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
+            } else {
+                window.location.replace("https://sakhonmso.vercel.app/external")
             }
-            )
+        }
+
+        longInLIFF()
 
     </script>
 </body>
