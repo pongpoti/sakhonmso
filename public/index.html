@@ -17,10 +17,9 @@
             font-family: "Noto Sans Thai Looped", sans-serif;
         }
 
-        #header,
-        #content,
         #pending,
-        #sent {
+        #sent,
+        #searchable {
             display: none;
         }
     </style>
@@ -43,13 +42,14 @@
                         <path d="m21 21-4.3-4.3"></path>
                     </g>
                 </svg>
-                <input type="search" required placeholder="ค้นหาชื่อแพทย์" />
+                <input id="search" type="search" required placeholder="ค้นหาชื่อแพทย์" pattern="^[ก-๏\s]+$"
+                    autocomplete="off" disabled />
             </label>
         </div>
     </div>
     <!--content-->
     <div id="content" class="grid grid-cols-1 justify-items-center mx-4">
-        <div id="load" class="loading loading-bars loading-md"></div>
+        <div id="load" class="loading loading-dots loading-lg"></div>
         <div id="pending" class="collapse collapse-arrow border bg-red-300 mb-4">
             <input type="checkbox" />
             <div class="collapse-title text-lg font-semibold">รายชื่อผู้ที่ยังไม่ได้ส่ง</div>
@@ -72,6 +72,11 @@
                 </div>
             </div>
         </div>
+        <div id="searchable" class="w-full overflow-x-auto rounded-box border bg-amber-50 m-4">
+            <table class="table">
+                <tbody id="tbody_searchable"></tbody>
+            </table>
+        </div>
     </div>
 
     <button type="button" id="backtotop"
@@ -87,31 +92,129 @@
 
     <script>
         const header = document.getElementById("header")
+        const search = document.getElementById("search")
         const content = document.getElementById("content")
         const load = document.getElementById("load")
         const count = document.getElementById("count")
         const pending = document.getElementById("pending")
         const sent = document.getElementById("sent")
+        const searchable = document.getElementById("searchable")
         const tbody_pending = document.getElementById("tbody_pending")
         const tbody_sent = document.getElementById("tbody_sent")
+        const tbody_searchable = document.getElementById("tbody_searchable")
         const backtotop = document.getElementById("backtotop");
 
         const scrolling = () => {
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                backtotop.classList.remove("hidden");
+                backtotop.classList.remove("hidden")
             } else {
-                backtotop.classList.add("hidden");
+                backtotop.classList.add("hidden")
             }
-        };
+        }
         const topping = () => {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
-            });
-        };
+            })
+        }
 
-        window.addEventListener("scroll", scrolling);
-        backtotop.addEventListener("click", topping);
+        window.addEventListener("scroll", scrolling)
+        backtotop.addEventListener("click", topping)
+        search.addEventListener("input", function () {
+            while (tbody_searchable.firstChild) {
+                tbody_searchable.removeChild(tbody_searchable.lastChild)
+            }
+            this.value = this.value.replace(/[^\u0E00-\u0E7F ]/, "")
+            if (this.value !== "") {
+                pending.style.display = "none"
+                sent.style.display = "none"
+                searchable.style.display = "grid"
+                let data = arr.filter((elem) => elem[1].includes(this.value.trim()))
+                if (data.length !== 0) {
+                    for (i = 0; i < data.length; i++) {
+                        let tr = document.createElement("tr")
+                        let td_name = document.createElement("td")
+                        let div = document.createElement("div")
+                        div.classList.add("grid", "grid-cols-1")
+                        let p1 = document.createElement("p")
+                        p1.innerText = data[i][1]
+                        p1.classList.add("text-lg")
+                        let p2 = document.createElement("p")
+                        p2.innerText = data[i][0] + " | " + data[i][2]
+                        p2.classList.add("text-sm", "text-gray-600")
+                        div.appendChild(p1)
+                        div.appendChild(p2)
+                        tr.appendChild(td_name).appendChild(div)
+                        let td_status = document.createElement("td")
+                        let icon = document.createElement("i")
+                        if (data[i][3]) {
+                            count_true += 1
+                            icon.classList.add("fa-solid", "fa-check")
+                            td_status.appendChild(icon)
+                            td_status.classList.add("text-base")
+                        } else {
+                            icon.classList.add("fa-solid", "fa-xmark")
+                            td_status.appendChild(icon)
+                            td_status.classList.add("text-base")
+                        }
+                        tbody_searchable.appendChild(tr).appendChild(td_status)
+                    }
+                } else {
+                    searchable.style.display = "none"
+                }
+            } else {
+                pending.style.display = "grid"
+                sent.style.display = "grid"
+                searchable.style.display = "none"
+            }
+        })
+
+        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
+        let param = "2568_10"
+        let query = "?date="
+        let count_true = 0
+        let arr = []
+
+        axios.get(url + query + param)
+            .then(response => {
+                count.classList.remove("skeleton", "skeleton-text")
+                search.disabled = false
+                load.style.display = "none"
+                pending.style.display = "grid"
+                sent.style.display = "grid"
+                const data = response.data
+                for (i = 0; i < data.length; i++) {
+                    arr[i] = data[i]
+                    let tr = document.createElement("tr")
+                    let td_name = document.createElement("td")
+                    let div = document.createElement("div")
+                    div.classList.add("grid", "grid-cols-1")
+                    let p1 = document.createElement("p")
+                    p1.innerText = data[i][1]
+                    p1.classList.add("text-lg")
+                    let p2 = document.createElement("p")
+                    p2.innerText = data[i][0] + " | " + data[i][2]
+                    p2.classList.add("text-sm", "text-gray-600")
+                    div.appendChild(p1)
+                    div.appendChild(p2)
+                    tr.appendChild(td_name).appendChild(div)
+                    let td_status = document.createElement("td")
+                    let icon = document.createElement("i")
+                    if (data[i][3]) {
+                        count_true += 1
+                        icon.classList.add("fa-solid", "fa-check")
+                        td_status.appendChild(icon)
+                        td_status.classList.add("text-base")
+                        tbody_sent.appendChild(tr).appendChild(td_status)
+                    } else {
+                        icon.classList.add("fa-solid", "fa-xmark")
+                        td_status.appendChild(icon)
+                        td_status.classList.add("text-base")
+                        tbody_pending.appendChild(tr).appendChild(td_status)
+                    }
+                }
+                count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
+            })
 
         const longInLIFF = async () => {
             if (window.innerWidth < 481) {
@@ -123,7 +226,7 @@
                         header.style.display = "flex"
                         content.style.display = "grid"
                         const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
-                        let param = "2568_8"
+                        let param = "2568_10"
                         let query = "?date="
                         let count_true = 0
                         axios.get(url + query + param)
@@ -176,7 +279,7 @@
             }
         }
 
-        longInLIFF()
+        //longInLIFF()
 
     </script>
 </body>

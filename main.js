@@ -15,3 +15,18 @@ app.get("/get", (_, res) => {
 app.listen(port, () => {
   console.log(".. 3030 ..");
 });
+
+const _color = [
+  "bg-red-300",
+  "bg-orange-300",
+  "bg-yellow-300",
+  "bg-lime-300",
+  "bg-green-300",
+  "bg-teal-300",
+  "bg-cyan-300",
+  "bg-sky-300",
+  "bg-blue-300",
+  "bg-indigo-300",
+  "bg-violet-300",
+  "bg-fuchsia-300",
+];
