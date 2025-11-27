@@ -17,6 +17,8 @@
             font-family: "Noto Sans Thai Looped", sans-serif;
         }
 
+        #header,
+        #content,
         #pending,
         #sent,
         #searchable {
@@ -163,29 +165,30 @@
                         for (j = 0; j < data.length; j++) {
                             if (data[j][2] === dep_array[i]) {
                                 count += 1
+                                //
                                 if (count < 2) {
                                     let tr_header = document.createElement("tr")
                                     let td = document.createElement("td")
-                                    td.classList.add("bg-amber-900", "text-white", "text-center")
+                                    td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg")
                                     td.colSpan = 2
                                     td.innerText = "กลุ่มงาน" + dep_array[i]
                                     tbody_searchable.appendChild(tr_header).appendChild(td)
                                 }
+                                //
                                 let tr_content = document.createElement("tr")
                                 let td_name = document.createElement("td")
+                                td_name.classList.add("text-lg")
                                 td_name.innerText = data[j][1] + "  (" + data[j][0] + ")"
                                 let td_status = document.createElement("td")
                                 let icon = document.createElement("i")
                                 if (data[j][3]) {
-                                    count_true += 1
                                     icon.classList.add("fa-solid", "fa-check")
-                                    td_status.appendChild(icon)
-                                    td_status.classList.add("text-base")
+                                    count_true += 1
                                 } else {
-                                    icon.classList.add("fa-solid", "fa-xmark")
-                                    td_status.appendChild(icon)
-                                    td_status.classList.add("text-base")
+                                    icon.classList.add("fa-solid", "fa-xmark")   
                                 }
+                                td_status.appendChild(icon)
+                                //
                                 tr_content.appendChild(td_name)
                                 tr_content.appendChild(td_status)
                                 tbody_searchable.appendChild(tr_content)
@@ -202,55 +205,6 @@
             }
         })
         //
-        /*
-        axios.get(url + par)
-            .then(response => {
-                //header section
-                header_display.innerText = displaying(par)
-                header_display.classList.remove("skeleton", "skeleton-text")
-                header_count.classList.remove("skeleton", "skeleton-text")
-                header_search.disabled = false
-                header_note.classList.remove("text-base-300")
-                header_note.classList.add("text-black")
-                //content section
-                load.style.display = "none"
-                pending.style.display = "grid"
-                sent.style.display = "grid"
-                const data = response.data
-                for (i = 0; i < data.length; i++) {
-                    arr[i] = data[i]
-                    let tr = document.createElement("tr")
-                    let td_name = document.createElement("td")
-                    let div = document.createElement("div")
-                    div.classList.add("grid", "grid-cols-1")
-                    let p1 = document.createElement("p")
-                    p1.innerText = data[i][1]
-                    p1.classList.add("text-lg")
-                    let p2 = document.createElement("p")
-                    p2.innerText = data[i][0] + " | " + data[i][2]
-                    p2.classList.add("text-sm", "text-gray-600")
-                    div.appendChild(p1)
-                    div.appendChild(p2)
-                    tr.appendChild(td_name).appendChild(div)
-                    let td_status = document.createElement("td")
-                    let icon = document.createElement("i")
-                    if (data[i][3]) {
-                        count_true += 1
-                        icon.classList.add("fa-solid", "fa-check")
-                        td_status.appendChild(icon)
-                        td_status.classList.add("text-base")
-                        tbody_sent.appendChild(tr).appendChild(td_status)
-                    } else {
-                        icon.classList.add("fa-solid", "fa-xmark")
-                        td_status.appendChild(icon)
-                        td_status.classList.add("text-base")
-                        tbody_pending.appendChild(tr).appendChild(td_status)
-                    }
-                }
-                header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
-            })
-        */
-
         const longInLIFF = async () => {
             if (window.innerWidth < 481) {
                 await liff.init({
@@ -279,6 +233,7 @@
                                 for (i = 0; i < data.length; i++) {
                                     arr[i] = data[i]
                                     let tr = document.createElement("tr")
+                                    //
                                     let td_name = document.createElement("td")
                                     let div = document.createElement("div")
                                     div.classList.add("grid", "grid-cols-1")
@@ -290,21 +245,21 @@
                                     p2.classList.add("text-sm", "text-gray-600")
                                     div.appendChild(p1)
                                     div.appendChild(p2)
-                                    tr.appendChild(td_name).appendChild(div)
+                                    td_name.appendChild(div)
+                                    //
                                     let td_status = document.createElement("td")
                                     let icon = document.createElement("i")
                                     if (data[i][3]) {
-                                        count_true += 1
                                         icon.classList.add("fa-solid", "fa-check")
-                                        td_status.appendChild(icon)
-                                        td_status.classList.add("text-base")
-                                        tbody_sent.appendChild(tr).appendChild(td_status)
+                                        count_true += 1
                                     } else {
                                         icon.classList.add("fa-solid", "fa-xmark")
-                                        td_status.appendChild(icon)
-                                        td_status.classList.add("text-base")
-                                        tbody_pending.appendChild(tr).appendChild(td_status)
                                     }
+                                    td_status.appendChild(icon)
+                                    //
+                                    tr.appendChild(td_name)
+                                    tr.appendChild(td_status)
+                                    tbody_pending.appendChild(tr)
                                 }
                                 header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
                             })
