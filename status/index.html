@@ -98,6 +98,11 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
 
     <script>
+
+        const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+        const params = new URLSearchParams(queryString);
+        const date = params.get("date")
+        console.log("DATE : " + date)
         //
         const par = new URLSearchParams(document.location.search).get("date")
         //

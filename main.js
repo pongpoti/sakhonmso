@@ -6,19 +6,11 @@ const app = express();
 const port = process.env.PORT || 3030;
 
 //app.use(express.static(path.join(import.meta.dirname, "public")));
-app.use("/public", express.static("public"));
+app.use("/status", express.static("status"));
 app.use("/external", express.static("external"));
-app.use("/liff", express.static("liff"));
 
-app.get("/", (req, res) => {
-  const date = req.query.date;
-  //const year = date.slice(0, 4)
-  //const month = date.slice(5)
-  res.redirect("https://sakhonmso.pongpoti.deno.net/public" + "?date=" + date);
-});
-
-app.get("/liff", (req, res) => {
-  res.redirect("https://sakhonmso.pongpoti.deno.net/liff");
+app.get("/status", (_, res) => {
+  res.redirect("https://sakhonmso.pongpoti.deno.net/status");
 });
 
 app.listen(port, () => {
