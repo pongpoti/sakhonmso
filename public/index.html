@@ -182,13 +182,11 @@
             }
         })
 
-        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
-        let param = "2568_10"
-        let query = "?date="
+        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec?date="
         let count_true = 0
         let arr = []
 
-        axios.get(url + query + param)
+        axios.get(url + par)
             .then(response => {
                 count.classList.remove("skeleton", "skeleton-text")
                 search.disabled = false
