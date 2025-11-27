@@ -8,6 +8,7 @@ const port = process.env.PORT || 3030;
 //app.use(express.static(path.join(import.meta.dirname, "public")));
 app.use("/public", express.static("public"));
 app.use("/external", express.static("external"));
+app.use("/liff", express.static("liff"));
 
 app.get("/", (req, res) => {
   const date = req.query.date;
@@ -17,9 +18,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/liff", (req, res) => {
-  const a = req.query
-  res.send(typeof a)
-})
+  res.redirect("https://sakhonmso.pongpoti.deno.net/liff");
+});
 
 app.listen(port, () => {
   console.log(".. 3030 ..");
