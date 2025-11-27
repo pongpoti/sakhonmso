@@ -9,10 +9,6 @@ const port = process.env.PORT || 3030;
 app.use("/status", express.static("status"));
 app.use("/external", express.static("external"));
 
-app.get("/status", (_, res) => {
-  res.redirect("https://sakhonmso.pongpoti.deno.net/status");
-});
-
 app.listen(port, () => {
   console.log(".. 3030 ..");
 });
