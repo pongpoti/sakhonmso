@@ -29,7 +29,10 @@
     <!--header-->
     <div id="header" class="navbar bg-base-200 shadow-md sticky flex flex-col align-center top-0 z-10 mb-8 pt-0">
         <div class="flex items-center w-screen">
-            <div id="header_display" class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold"></div>
+            <div id="header_display"
+                class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold skeleton skeleton-text">
+                เดือน..
+            </div>
             <div id="header_count" class="bg-base-200 w-1/2 p-2 pr-4 text-right text-md skeleton skeleton-text">
                 รวบรวมข้อมูล..
             </div>
@@ -95,6 +98,9 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
 
     <script>
+        //
+        const par = new URLSearchParams(document.location.search).get("date")
+        //
         const header = document.getElementById("header")
         const header_count = document.getElementById("header_count")
         const header_display = document.getElementById("header_display")
@@ -137,9 +143,6 @@
                 behavior: "smooth"
             })
         }
-        //
-        const par = new URLSearchParams(document.location.search).get("date")
-        header_display.innerText = displaying(par)
         //
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
@@ -200,10 +203,14 @@
         //
         axios.get(url + par)
             .then(response => {
+                //header section
+                header_display.innerText = displaying(par)
+                header_display.classList.remove("skeleton", "skeleton-text")
                 header_count.classList.remove("skeleton", "skeleton-text")
                 header_search.disabled = false
                 header_note.classList.remove("text-bg-200")
                 header_note.classList.add("text-black")
+                //content section
                 load.style.display = "none"
                 pending.style.display = "grid"
                 sent.style.display = "grid"
@@ -250,18 +257,24 @@
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
-                        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec"
-                        let param = "2568_10"
-                        let query = "?date="
-                        let count_true = 0
-                        axios.get(url + query + param)
+                        //
+                        axios.get(url + par)
                             .then(response => {
-                                count.classList.remove("skeleton", "skeleton-text")
+                                //header section
+                                header_display.innerText = displaying(par)
+                                header_display.classList.remove("skeleton", "skeleton-text")
+                                header_count.classList.remove("skeleton", "skeleton-text")
+                                header_search.disabled = false
+                                header_note.classList.remove("text-bg-200")
+                                header_note.classList.add("text-black")
+                                //content section
                                 load.style.display = "none"
                                 pending.style.display = "grid"
                                 sent.style.display = "grid"
+                                //iterates data
                                 const data = response.data
                                 for (i = 0; i < data.length; i++) {
+                                    arr[i] = data[i]
                                     let tr = document.createElement("tr")
                                     let td_name = document.createElement("td")
                                     let div = document.createElement("div")
@@ -290,11 +303,11 @@
                                         tbody_pending.appendChild(tr).appendChild(td_status)
                                     }
                                 }
-                                count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
-                            }
-                            )
+                                header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
+                            })
+                        //
                     } else {
-                        liff.login({ redirectUri: "https://sakhonmso.pongpoti.deno.net" })
+                        liff.login({ redirectUri: "https://sakhonmso.pongpoti.deno.net?date=" + par })
                     }
                 } else {
                     window.location.replace("https://sakhonmso.pongpoti.deno.net/external")
