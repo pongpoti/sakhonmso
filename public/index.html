@@ -50,7 +50,7 @@
                 <input id="header_search" type="search" required placeholder="ค้นหาชื่อแพทย์" pattern="^[ก-๏\s]+$"
                     autocomplete="off" disabled />
             </label>
-            <div id="header_note" class="text-xs text-base-200 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
+            <div id="header_note" class="text-xs text-base-300 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
             </div>
         </div>
     </div>
@@ -201,6 +201,7 @@
             }
         })
         //
+        /*
         axios.get(url + par)
             .then(response => {
                 //header section
@@ -208,7 +209,7 @@
                 header_display.classList.remove("skeleton", "skeleton-text")
                 header_count.classList.remove("skeleton", "skeleton-text")
                 header_search.disabled = false
-                header_note.classList.remove("text-bg-200")
+                header_note.classList.remove("text-base-300")
                 header_note.classList.add("text-black")
                 //content section
                 load.style.display = "none"
@@ -247,6 +248,7 @@
                 }
                 header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
             })
+        */
 
         const longInLIFF = async () => {
             if (window.innerWidth < 481) {
@@ -265,7 +267,7 @@
                                 header_display.classList.remove("skeleton", "skeleton-text")
                                 header_count.classList.remove("skeleton", "skeleton-text")
                                 header_search.disabled = false
-                                header_note.classList.remove("text-bg-200")
+                                header_note.classList.remove("text-base-200")
                                 header_note.classList.add("text-black")
                                 //content section
                                 load.style.display = "none"
@@ -317,7 +319,7 @@
             }
         }
 
-        //longInLIFF()
+        longInLIFF()
 
     </script>
 </body>
