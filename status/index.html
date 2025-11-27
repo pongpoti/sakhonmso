@@ -216,11 +216,11 @@
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
-                        sent.style.display = "block"
-                        pending.style.display = "block"
                         //
                         axios.get(url + par)
                             .then(response => {
+                                sent.style.display = "grid"
+                                pending.style.display = "grid"
                                 //header section
                                 header_display.innerText = displaying(par)
                                 header_display.classList.remove("skeleton", "skeleton-text")
@@ -256,11 +256,11 @@
                                     if (data[i][3]) {
                                         icon.classList.add("fa-solid", "fa-check")
                                         td_status.appendChild(icon)
-                                        tbody_sent.appenChild(tr).appendChild(td_status)
+                                        tbody_sent.appendChild(tr).appendChild(td_status)
                                         count_true += 1
                                     } else {
                                         icon.classList.add("fa-solid", "fa-xmark")
-                                        td_status.appenChild(icon)
+                                        td_status.appendChild(icon)
                                         tbody_pending.appendChild(tr).appendChild(td_status)
                                     }
                                 }
