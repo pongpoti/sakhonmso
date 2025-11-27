@@ -216,6 +216,8 @@
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
+                        sent.style.display = "block"
+                        pending.style.display = "block"
                         //
                         axios.get(url + par)
                             .then(response => {
@@ -264,7 +266,6 @@
                                 }
                                 header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
                             })
-                        //
                     } else {
                         liff.login({ redirectUri: "https://sakhonmso.pongpoti.deno.net/status?date=" + par })
                     }
