@@ -29,9 +29,9 @@
     <!--header-->
     <div id="header" class="navbar bg-base-200 shadow-md sticky flex flex-col align-center top-0 z-10 mb-8 pt-0">
         <div class="flex items-center w-screen">
-            <div id="header_display" class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold">ตุลาคม 2568
-            </div>
-            <div id="header_count" class="bg-base-200 w-1/2 p-2 pr-4 text-right text-md skeleton skeleton-text">รวบรวมข้อมูล..
+            <div id="header_display" class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold"></div>
+            <div id="header_count" class="bg-base-200 w-1/2 p-2 pr-4 text-right text-md skeleton skeleton-text">
+                รวบรวมข้อมูล..
             </div>
         </div>
         <!--searchbox-->
@@ -95,8 +95,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
 
     <script>
-        const par = new URLSearchParams(document.location.search).get("date")
-        //
         const header = document.getElementById("header")
         const header_count = document.getElementById("header_count")
         const header_display = document.getElementById("header_display")
@@ -112,16 +110,19 @@
         const tbody_sent = document.getElementById("tbody_sent")
         const tbody_searchable = document.getElementById("tbody_searchable")
         const backtotop = document.getElementById("backtotop");
-
+        //
         const dep_array = ["สูติ-นรีเวชกรรม", "กุมารเวชกรรม", "รังสีวิทยา", "อายุรกรรม", "ศัลยกรรม", "ศัลยกรรมออร์โธปิดิกส์", "จักษุวิทยา", "โสต ศอ นาสิก", "วิสัญญีวิทยา", "เวชกรรมฟื้นฟู", "อาชีวเวชกรรม", "จิตเวชและยาเสพติด", "เวชศาสตร์ฉุกเฉิน", "เทคนิคการแพทย์และพยาธิวิทยาคลินิก", "พยาธิวิทยากายวิภาค", "นิติเวช", "ผู้ป่วยนอก", "INTERN"]
-
+        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec?date="
+        let count_true = 0
+        let arr = []
+        //
         const displaying = (param) => {
             let month_array = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
             let year = param.slice(0, 4)
             let month = parseInt(param.slice(5))
             return month_array[month - 1] + " " + year
         }
-
+        //
         const scrolling = () => {
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                 backtotop.classList.remove("hidden")
@@ -129,16 +130,19 @@
                 backtotop.classList.add("hidden")
             }
         }
+        //
         const topping = () => {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             })
         }
-
+        //
+        const par = new URLSearchParams(document.location.search).get("date")
+        header_display.innerText = displaying(par)
+        //
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
-
         header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
                 tbody_searchable.removeChild(tbody_searchable.lastChild)
@@ -193,18 +197,14 @@
                 searchable.style.display = "none"
             }
         })
-
-        const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec?date="
-        let count_true = 0
-        let arr = []
-
+        //
         axios.get(url + par)
             .then(response => {
                 console.log(displaying(par))
                 header_count.classList.remove("skeleton", "skeleton-text")
                 header_search.disabled = false
                 header_note.classList.remove("text-bg-200")
-                header_note.classList.add("text-white")
+                header_note.classList.add("text-black")
                 load.style.display = "none"
                 pending.style.display = "grid"
                 sent.style.display = "grid"
