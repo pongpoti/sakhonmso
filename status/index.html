@@ -182,7 +182,9 @@
                                 let td_status = document.createElement("td")
                                 let icon = document.createElement("i")
                                 if (data[j][3]) {
+                                    icon.style.color = "red-700"
                                     icon.classList.add("fa-solid", "fa-check")
+                                    td_name.classList.add("text-red-700")
                                     count_true += 1
                                 } else {
                                     icon.classList.add("fa-solid", "fa-xmark")   
