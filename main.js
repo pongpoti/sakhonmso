@@ -1,15 +1,19 @@
 import express from "express";
-import path from "node:path";
+//import path from "node:path";
 import process from "node:process";
 
 const app = express();
 const port = process.env.PORT || 3030;
 
-app.use(express.static(path.join(import.meta.dirname, "public")));
+//app.use(express.static(path.join(import.meta.dirname, "public")));
+app.use("/public", express.static("public"));
 app.use("/external", express.static("external"));
 
-app.get("/get", (_, res) => {
-  res.send("hi there");
+app.get("/", (req, res) => {
+  const date = req.query.date;
+  //const year = date.slice(0, 4)
+  //const month = date.slice(5)
+  res.redirect("https://sakhonmso.pongpoti.deno.net/public" + "?date=" + date);
 });
 
 app.listen(port, () => {
