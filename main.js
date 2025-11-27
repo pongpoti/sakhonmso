@@ -17,8 +17,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/liff", (req, res) => {
-  let a = req.query.liff.state
-  let b = a.slice(a.indexOf("=") + 1)
+  const a = req.query.liff.state
+  const b = a.slice(a.indexOf("=") + 1)
   res.send(b)
 })
 
