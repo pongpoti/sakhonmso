@@ -253,11 +253,11 @@
 
         const longInLIFF = async () => {
             console.log("PAR : " + par)
-            if (window.innerWidth < 4810) {
+            if (window.innerWidth < 481) {
                 await liff.init({
                     liffId: "2008561527-a0xP1XmY"
                 })
-                if (!liff.isInClient()) {
+                if (liff.isInClient()) {
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
