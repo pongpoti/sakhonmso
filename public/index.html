@@ -200,7 +200,7 @@
 
         axios.get(url + par)
             .then(response => {
-                displaying(par)
+                console.log(displaying(par))
                 header_count.classList.remove("skeleton", "skeleton-text")
                 header_search.disabled = false
                 header_note.classList.remove("text-bg-200")
