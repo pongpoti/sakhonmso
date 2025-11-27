@@ -16,6 +16,10 @@ app.get("/", (req, res) => {
   res.redirect("https://sakhonmso.pongpoti.deno.net/public" + "?date=" + date);
 });
 
+app.get("/liff", (req, res) => {
+  res.send(req.query)
+})
+
 app.listen(port, () => {
   console.log(".. 3030 ..");
 });
