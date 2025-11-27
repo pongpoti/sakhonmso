@@ -98,14 +98,9 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
 
     <script>
-
-        const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-        const params = new URLSearchParams(queryString);
-        const date = params.get("date")
-        console.log("DATE : " + date)
-        console.log("hit")
         //
-        const par = new URLSearchParams(document.location.search).get("date")
+        const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+        const par = new URLSearchParams(queryString).get("date")
         //
         const header = document.getElementById("header")
         const header_count = document.getElementById("header_count")
@@ -257,11 +252,11 @@
         */
 
         const longInLIFF = async () => {
-            if (window.innerWidth < 481) {
+            if (window.innerWidth < 4810) {
                 await liff.init({
                     liffId: "2008561527-a0xP1XmY"
                 })
-                if (liff.isInClient()) {
+                if (!liff.isInClient()) {
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
@@ -325,7 +320,7 @@
             }
         }
 
-        //longInLIFF()
+        longInLIFF()
 
     </script>
 </body>
