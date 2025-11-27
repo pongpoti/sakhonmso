@@ -18,8 +18,7 @@ app.get("/", (req, res) => {
 
 app.get("/liff", (req, res) => {
   const a = req.query
-  const b = a.liff.state
-  res.send(b)
+  res.send(typeof a)
 })
 
 app.listen(port, () => {
