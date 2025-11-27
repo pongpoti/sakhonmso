@@ -29,8 +29,9 @@
     <!--header-->
     <div id="header" class="navbar bg-base-200 shadow-md sticky flex flex-col align-center top-0 z-10 mb-8 pt-0">
         <div class="flex items-center w-screen">
-            <div class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold">ตุลาคม 2568</div>
-            <div id="count" class="bg-base-200 w-1/2 p-2 pr-4 text-right text-md skeleton skeleton-text">รวบรวมข้อมูล..
+            <div id="header_display" class="bg-base-300 w-1/2 p-2 pl-12 text-left text-lg font-semibold">ตุลาคม 2568
+            </div>
+            <div id="header_count" class="bg-base-200 w-1/2 p-2 pr-4 text-right text-md skeleton skeleton-text">รวบรวมข้อมูล..
             </div>
         </div>
         <!--searchbox-->
@@ -43,10 +44,11 @@
                         <path d="m21 21-4.3-4.3"></path>
                     </g>
                 </svg>
-                <input id="search" type="search" required placeholder="ค้นหาชื่อแพทย์" pattern="^[ก-๏\s]+$"
+                <input id="header_search" type="search" required placeholder="ค้นหาชื่อแพทย์" pattern="^[ก-๏\s]+$"
                     autocomplete="off" disabled />
             </label>
-            <div class="text-xs mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน</div>
+            <div id="header_note" class="text-xs text-base-200 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
+            </div>
         </div>
     </div>
     <!--content-->
@@ -94,13 +96,15 @@
 
     <script>
         const par = new URLSearchParams(document.location.search).get("date")
-        console.log("param : " + par)
-
+        //
         const header = document.getElementById("header")
-        const search = document.getElementById("search")
+        const header_count = document.getElementById("header_count")
+        const header_display = document.getElementById("header_display")
+        const header_search = document.getElementById("header_search")
+        const header_note = document.getElementById("header_note")
+        //
         const content = document.getElementById("content")
         const load = document.getElementById("load")
-        const count = document.getElementById("count")
         const pending = document.getElementById("pending")
         const sent = document.getElementById("sent")
         const searchable = document.getElementById("searchable")
@@ -110,6 +114,13 @@
         const backtotop = document.getElementById("backtotop");
 
         const dep_array = ["สูติ-นรีเวชกรรม", "กุมารเวชกรรม", "รังสีวิทยา", "อายุรกรรม", "ศัลยกรรม", "ศัลยกรรมออร์โธปิดิกส์", "จักษุวิทยา", "โสต ศอ นาสิก", "วิสัญญีวิทยา", "เวชกรรมฟื้นฟู", "อาชีวเวชกรรม", "จิตเวชและยาเสพติด", "เวชศาสตร์ฉุกเฉิน", "เทคนิคการแพทย์และพยาธิวิทยาคลินิก", "พยาธิวิทยากายวิภาค", "นิติเวช", "ผู้ป่วยนอก", "INTERN"]
+
+        const displaying = (param) => {
+            let month_array = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
+            let year = param.slice(0, 4)
+            let month = parseInt(param.slice(5))
+            return month_array[month - 1] + " " + year
+        }
 
         const scrolling = () => {
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -127,7 +138,8 @@
 
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
-        search.addEventListener("input", function () {
+
+        header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
                 tbody_searchable.removeChild(tbody_searchable.lastChild)
             }
@@ -188,8 +200,11 @@
 
         axios.get(url + par)
             .then(response => {
-                count.classList.remove("skeleton", "skeleton-text")
-                search.disabled = false
+                displaying(par)
+                header_count.classList.remove("skeleton", "skeleton-text")
+                header_search.disabled = false
+                header_note.classList.remove("text-bg-200")
+                header_note.classList.add("text-white")
                 load.style.display = "none"
                 pending.style.display = "grid"
                 sent.style.display = "grid"
@@ -224,7 +239,7 @@
                         tbody_pending.appendChild(tr).appendChild(td_status)
                     }
                 }
-                count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
+                header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
             })
 
         const longInLIFF = async () => {
