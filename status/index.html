@@ -247,21 +247,20 @@
                                     p2.classList.add("text-sm", "text-gray-600")
                                     div.appendChild(p1)
                                     div.appendChild(p2)
-                                    td_name.appendChild(div)
+                                    tr.appendChild(td_name).appendChild(div)
                                     //
                                     let td_status = document.createElement("td")
                                     let icon = document.createElement("i")
                                     if (data[i][3]) {
                                         icon.classList.add("fa-solid", "fa-check")
+                                        td_status.appendChild(icon)
+                                        tbody_sent.appenChild(tr).appendChild(td_status)
                                         count_true += 1
                                     } else {
                                         icon.classList.add("fa-solid", "fa-xmark")
+                                        td_status.appenChild(icon)
+                                        tbody_pending.appendChild(tr).appendChild(td_status)
                                     }
-                                    td_status.appendChild(icon)
-                                    //
-                                    tr.appendChild(td_name)
-                                    tr.appendChild(td_status)
-                                    tbody_pending.appendChild(tr)
                                 }
                                 header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
                             })
