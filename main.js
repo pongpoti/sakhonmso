@@ -17,7 +17,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/liff", (req, res) => {
-  res.send(req.query)
+  let a = req.query.liff.state
+  let b = a.slice(a.indexOf("=") + 1)
+  res.send(b)
 })
 
 app.listen(port, () => {
