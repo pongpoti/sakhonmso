@@ -3,6 +3,7 @@
     "dev": "deno run --watch main.ts"
   },
   "imports": {
+    "@line/bot-sdk": "npm:@line/bot-sdk@^10.5.0",
     "@std/assert": "jsr:@std/assert@1",
     "express": "npm:express@^5.1.0"
   }
