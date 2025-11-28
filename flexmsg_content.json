@@ -1,0 +1,54 @@
+{
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+        {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "//",
+                    "align": "center",
+                    "size": "lg",
+                    "style": "italic",
+                    "weight": "bold"
+                }
+            ],
+            "backgroundColor": "//",
+            "cornerRadius": "sm",
+            "borderColor": "//",
+            "borderWidth": "semi-bold",
+            "flex": 3,
+            "paddingAll": "md"
+        },
+        {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "คลิก",
+                    "align": "center",
+                    "weight": "bold",
+                    "size": "lg",
+                    "color": "#312c85"
+                }
+            ],
+            "backgroundColor": "#f5f5f5",
+            "cornerRadius": "md",
+            "offsetEnd": "md",
+            "borderColor": "#312c85",
+            "borderWidth": "semi-bold",
+            "flex": 1,
+            "paddingAll": "md",
+            "action": {
+                "type": "postback",
+                "label": "//",
+                "data": "//"
+            }
+        }
+    ],
+    "paddingBottom": "xxl",
+    "paddingTop": "xxl"
+}

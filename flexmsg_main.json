@@ -1,0 +1,48 @@
+{
+  "type": "bubble",
+  "size": "mega",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "กรุณาเลือกเดือน",
+            "align": "center",
+            "color": "#FFFFFF",
+            "size": "xxl",
+            "margin": "md",
+            "offsetBottom": "sm",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "สามารถดูได้ 3 เดือนย้อนหลัง",
+            "color": "#ffffa0",
+            "align": "center"
+          }
+        ]
+      }
+    ],
+    "backgroundColor": "#1F627C",
+    "paddingAll": "xxl"
+  },
+  "hero": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [],
+    "height": "5px",
+    "backgroundColor": "#81A7AE"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      "//"
+    ]
+  }
+}
