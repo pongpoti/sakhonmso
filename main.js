@@ -5,6 +5,12 @@ import axios from "axios";
 
 const app = express();
 const port = process.env.PORT || 3030;
+const headers = {
+  "Content-Type": "application/json",
+  "Authorization":
+    "Bearer CfooTgPWPH5iXEy9g0a8yGbzFXqMEchsXbW35GI0SQmtYLJqQHX45FwqBuorTlUqlxvg817UnB9vcpWDykEs8gdJdtf97k0fvTWQigrdRCOMq4J4IZ1RTvrV+CE8Q61D92LyyNQ98sCdmdXBMZ+jgAdB04t89/1O/w1cDnyilFU=",
+};
+
 const config = {
   channelSecret: "fbd3ebe2ca4028a0af48b9b65ed870fa",
 };
