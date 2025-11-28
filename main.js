@@ -1,7 +1,7 @@
 import express from "express";
 import process from "node:process";
 import * as line from "@line/bot-sdk";
-import { rmSync } from "node:fs";
+import axios from "axios";
 
 const app = express();
 const port = process.env.PORT || 3030;
@@ -45,6 +45,7 @@ app.post("/line", line.middleware(config), (req, res) => {
 function handleEvent(event) {
   const data = event.postback.data;
   const userId = event.source.userId;
+  loadAnimation(userId);
   if (data === "rm_status") {
     console.log("rm_status");
   } else if (data === "rm_send") {
@@ -53,7 +54,7 @@ function handleEvent(event) {
       "messages": [
         {
           "type": "text",
-          "text": "ส่วนนี้ยังไม่เปิดใช้งาน",
+          "text": "บริการนี้ยังไม่เปิดใช้งาน",
         },
       ],
     });
@@ -63,9 +64,24 @@ function handleEvent(event) {
       "messages": [
         {
           "type": "text",
-          "text": "ส่วนนี้ยังไม่เปิดใช้งาน",
+          "text": "บริการนี้ยังไม่เปิดใช้งาน",
         },
       ],
     });
   }
+}
+
+function loadAnimation(userId) {
+  axios.post(
+    "https://api.line.me/v2/bot/chat/loading/start",
+    {
+      "chatId": userId,
+      "loadingSeconds": 5,
+    },
+    {
+      headers: headers,
+    },
+  )
+    .then(() => console.log("loadAnimation(), userId : " + userId))
+    .catch((error) => console.error(error));
 }
