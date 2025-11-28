@@ -83,16 +83,17 @@ function handleEvent(event) {
   const userId = event.source.userId;
   loadAnimation(userId);
   if (data === "rm_status") {
+    console.log("RM_STATUS")
     client.pushMessage({
       "to": userId,
       "messages": [
         {
           "type": "flex",
           "altText": "เลือกเดือนที่ต้องการ",
-          "contents": assembleFullList()
-        }
-      ]
-    })
+          "contents": assembleFullList(),
+        },
+      ],
+    });
   } else if (data === "rm_send") {
     client.pushMessage({
       "to": userId,
@@ -121,7 +122,7 @@ function loadAnimation(userId) {
     "https://api.line.me/v2/bot/chat/loading/start",
     {
       "chatId": userId,
-      "loadingSeconds": 5,
+      "loadingSeconds": 10,
     },
     {
       headers: headers,
@@ -132,11 +133,12 @@ function loadAnimation(userId) {
 }
 
 function createMonthList(i) {
+  console.log("createMontList(): " + i)
   const month = (new Date()).getMonth();
   const year = (new Date()).getFullYear() + 543;
   const iterator = month_iterator[month];
   const name = month_array[iterator[i][0]] + " " + (year + iterator[i][1]);
-  const color = color_array[iterator[i][0]]
+  const color = color_array[iterator[i][0]];
   const postback = (year + iterator[i][1]) + "_" + (iterator[i][0] + 1);
   const object = {
     "type": "box",
@@ -196,6 +198,7 @@ function createMonthList(i) {
 }
 
 function assembleFullList() {
+  console.log("aassembleFullList()")
   const object = {
     "type": "bubble",
     "size": "mega",
