@@ -122,7 +122,6 @@ function loadAnimation(userId) {
     "https://api.line.me/v2/bot/chat/loading/start",
     {
       "chatId": userId,
-      "loadingSeconds": 10,
     },
     {
       headers: headers,
