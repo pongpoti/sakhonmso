@@ -135,8 +135,8 @@ function createMonthList(i) {
   const month = (new Date()).getMonth();
   const year = (new Date()).getFullYear() + 543;
   const iterator = month_iterator[month];
-  const color = color_array[month][1];
   const name = month_array[iterator[i][0]] + " " + (year + iterator[i][1]);
+  const color = color_array[iterator[i][0]]
   const postback = (year + iterator[i][1]) + "_" + (iterator[i][0] + 1);
   const object = {
     "type": "box",
