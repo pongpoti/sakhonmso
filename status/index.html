@@ -169,7 +169,7 @@
                                 if (count < 2) {
                                     let tr_header = document.createElement("tr")
                                     let td = document.createElement("td")
-                                    td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg")
+                                    td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg", "font-semibold")
                                     td.colSpan = 2
                                     td.innerText = "กลุ่มงาน" + dep_array[i]
                                     tbody_searchable.appendChild(tr_header).appendChild(td)
@@ -266,6 +266,7 @@
                                 }
                                 header_count.innerText = "(ส่ง " + count_true + " จาก " + data.length + " ราย)"
                             })
+                            .catch((error) => console.error(error))
                     } else {
                         liff.login({ redirectUri: "https://sakhonmso.pongpoti.deno.net/status?date=" + par })
                     }

@@ -20,18 +20,18 @@ const client = new line.messagingApi.MessagingApiClient({
 });
 
 const _color = [
-  "bg-red-300",
-  "bg-orange-300",
-  "bg-yellow-300",
-  "bg-lime-300",
-  "bg-green-300",
-  "bg-teal-300",
-  "bg-cyan-300",
-  "bg-sky-300",
-  "bg-blue-300",
-  "bg-indigo-300",
-  "bg-violet-300",
-  "bg-fuchsia-300",
+  ["bg-red-300", "#ffa2a2"],
+  ["bg-orange-300", "#ffb86a"],
+  ["bg-yellow-300", "#ffdf20"],
+  ["bg-lime-300", "#bbf451"],
+  ["bg-green-300", "#7bf1a8"],
+  ["bg-teal-300", "#46ecd5"],
+  ["bg-cyan-300", "#53eafd"],
+  ["bg-sky-300", "#74d4ff"],
+  ["bg-blue-300", "#8ec5ff"],
+  ["bg-indigo-300", "#a3b3ff"],
+  ["bg-violet-300", "#c4b4ff"],
+  ["bg-fuchsia-300", "#f4a8ff"],
 ];
 
 app.use("/status", express.static("status"));
@@ -88,6 +88,6 @@ function loadAnimation(userId) {
       headers: headers,
     },
   )
-    .then(() => console.log("loadAnimation(), userId : " + userId))
+    .then()
     .catch((error) => console.error(error));
 }
