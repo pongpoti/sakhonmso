@@ -1,20 +1,20 @@
 import express from "express";
+import process from "node:process";
 import * as line from "@line/bot-sdk";
 import axios from "axios";
 
 const app = express();
+const port = process.env.PORT || 3030;
 const headers = {
   "Content-Type": "application/json",
-  "Authorization":
-    "Bearer CfooTgPWPH5iXEy9g0a8yGbzFXqMEchsXbW35GI0SQmtYLJqQHX45FwqBuorTlUqlxvg817UnB9vcpWDykEs8gdJdtf97k0fvTWQigrdRCOMq4J4IZ1RTvrV+CE8Q61D92LyyNQ98sCdmdXBMZ+jgAdB04t89/1O/w1cDnyilFU=",
+  "Authorization": "Bearer " + Deno.env.get("CHANNEL_ACCESS_TOKEN"),
 };
 
 const config = {
-  channelSecret: "fbd3ebe2ca4028a0af48b9b65ed870fa",
+  channelSecret: Deno.env.get("CHANNEL_SECRET"),
 };
 const client = new line.messagingApi.MessagingApiClient({
-  channelAccessToken:
-    "CfooTgPWPH5iXEy9g0a8yGbzFXqMEchsXbW35GI0SQmtYLJqQHX45FwqBuorTlUqlxvg817UnB9vcpWDykEs8gdJdtf97k0fvTWQigrdRCOMq4J4IZ1RTvrV+CE8Q61D92LyyNQ98sCdmdXBMZ+jgAdB04t89/1O/w1cDnyilFU=",
+  channelAccessToken: Deno.env.get("CHANNEL_ACCESS_TOKEN"),
 });
 
 const color_array = [
@@ -64,6 +64,10 @@ const month_iterator = [
 
 app.use("/status", express.static("status"));
 app.use("/external", express.static("external"));
+
+app.listen(port, () => {
+  console.log("server on..");
+});
 
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
@@ -174,7 +178,8 @@ function createList(i) {
         "action": {
           "type": "uri",
           "label": date,
-          "uri": "https://liff.line.me/2008561527-a0xP1XmY?date=" + date + "&color=" + color_tw,
+          "uri": "https://liff.line.me/2008561527-a0xP1XmY?date=" + date +
+            "&color=" + color_tw,
         },
       },
     ],
