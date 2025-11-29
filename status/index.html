@@ -151,6 +151,9 @@
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
         byname_input.addEventListener("change", function () {
+            pending.style.display = "grid"
+            sent.style.display = "grid"
+            searchable.style.display = "none"
             if (this.checked) {
                 bydep_input.checked = false
                 header_search.disabled = false
@@ -160,6 +163,9 @@
             }
         })
         bydep_input.addEventListener("change", function () {
+            pending.style.display = "grid"
+            sent.style.display = "grid"
+            searchable.style.display = "none"
             if (this.checked) {
                 byname_input.checked = false
                 header_search.disabled = false
