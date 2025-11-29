@@ -28,7 +28,6 @@
 </head>
 
 <body>
-    <!--header-->
     <div id="header" class="navbar bg-base-200 shadow-md sticky flex flex-col align-center top-0 z-10 mb-8 pt-0">
         <div class="flex items-center w-screen">
             <div id="header_display"
@@ -56,7 +55,6 @@
             </div>
         </div>
     </div>
-    <!--content-->
     <div id="content" class="grid grid-cols-1 justify-items-center mx-4">
         <div id="load" class="loading loading-dots loading-lg"></div>
         <div id="pending" class="collapse collapse-arrow border bg-red-300 mb-4">
@@ -87,7 +85,6 @@
             </table>
         </div>
     </div>
-
     <button type="button" id="backtotop"
         class="z-10 fixed bottom-4 right-4 rounded-full shadow-md focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out hidden">
         <svg class="size-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -95,21 +92,16 @@
                 d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM441 335C450.4 344.4 450.4 359.6 441 368.9C431.6 378.2 416.4 378.3 407.1 368.9L320.1 281.9L233.1 368.9C223.7 378.3 208.5 378.3 199.2 368.9C189.9 359.5 189.8 344.3 199.2 335L303 231C312.4 221.6 327.6 221.6 336.9 231L441 335z" />
         </svg>
     </button>
-
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
-
     <script>
-        //
         const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
         const par = new URLSearchParams(queryString).get("date")
-        //
         const header = document.getElementById("header")
         const header_count = document.getElementById("header_count")
         const header_display = document.getElementById("header_display")
         const header_search = document.getElementById("header_search")
         const header_note = document.getElementById("header_note")
-        //
         const content = document.getElementById("content")
         const load = document.getElementById("load")
         const pending = document.getElementById("pending")
@@ -119,19 +111,16 @@
         const tbody_sent = document.getElementById("tbody_sent")
         const tbody_searchable = document.getElementById("tbody_searchable")
         const backtotop = document.getElementById("backtotop");
-        //
         const dep_array = ["สูติ-นรีเวชกรรม", "กุมารเวชกรรม", "รังสีวิทยา", "อายุรกรรม", "ศัลยกรรม", "ศัลยกรรมออร์โธปิดิกส์", "จักษุวิทยา", "โสต ศอ นาสิก", "วิสัญญีวิทยา", "เวชกรรมฟื้นฟู", "อาชีวเวชกรรม", "จิตเวชและยาเสพติด", "เวชศาสตร์ฉุกเฉิน", "เทคนิคการแพทย์และพยาธิวิทยาคลินิก", "พยาธิวิทยากายวิภาค", "นิติเวช", "ผู้ป่วยนอก", "INTERN"]
         const url = "https://script.google.com/macros/s/AKfycbypT_Qzc0d_eZ5v1yH4e46RK2NARXOplqZdsNUOfBgPRtYywrXA1mYzCYDflVJVRO4zpA/exec?date="
         let count_true = 0
         let arr = []
-        //
         const displaying = (param) => {
             let month_array = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
             let year = param.slice(0, 4)
             let month = parseInt(param.slice(5))
             return month_array[month - 1] + " " + year
         }
-        //
         const scrolling = () => {
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                 backtotop.classList.remove("hidden")
@@ -139,14 +128,12 @@
                 backtotop.classList.add("hidden")
             }
         }
-        //
         const topping = () => {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             })
         }
-        //
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
         header_search.addEventListener("input", function () {
@@ -165,7 +152,6 @@
                         for (j = 0; j < data.length; j++) {
                             if (data[j][2] === dep_array[i]) {
                                 count += 1
-                                //
                                 if (count < 2) {
                                     let tr_header = document.createElement("tr")
                                     let td = document.createElement("td")
@@ -174,7 +160,6 @@
                                     td.innerText = "กลุ่มงาน" + dep_array[i]
                                     tbody_searchable.appendChild(tr_header).appendChild(td)
                                 }
-                                //
                                 let tr_content = document.createElement("tr")
                                 let td_name = document.createElement("td")
                                 td_name.classList.add("text-lg")
@@ -190,7 +175,6 @@
                                     td_name.classList.add("text-red-700")
                                 }
                                 td_status.appendChild(icon)
-                                //
                                 tr_content.appendChild(td_name)
                                 tr_content.appendChild(td_status)
                                 tbody_searchable.appendChild(tr_content)
@@ -206,7 +190,6 @@
                 searchable.style.display = "none"
             }
         })
-        //
         const longInLIFF = async () => {
             if (window.innerWidth < 481) {
                 await liff.init({
@@ -216,28 +199,23 @@
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
-                        //
                         axios.get(url + par)
                             .then(response => {
                                 sent.style.display = "grid"
                                 pending.style.display = "grid"
-                                //header section
                                 header_display.innerText = displaying(par)
                                 header_display.classList.remove("skeleton", "skeleton-text")
                                 header_count.classList.remove("skeleton", "skeleton-text")
                                 header_search.disabled = false
                                 header_note.classList.remove("text-base-200")
                                 header_note.classList.add("text-black")
-                                //content section
                                 load.style.display = "none"
                                 pending.style.display = "grid"
                                 sent.style.display = "grid"
-                                //iterates data
                                 const data = response.data
                                 for (i = 0; i < data.length; i++) {
                                     arr[i] = data[i]
                                     let tr = document.createElement("tr")
-                                    //
                                     let td_name = document.createElement("td")
                                     let div = document.createElement("div")
                                     div.classList.add("grid", "grid-cols-1")
@@ -250,7 +228,6 @@
                                     div.appendChild(p1)
                                     div.appendChild(p2)
                                     tr.appendChild(td_name).appendChild(div)
-                                    //
                                     let td_status = document.createElement("td")
                                     let icon = document.createElement("i")
                                     if (data[i][3]) {
@@ -277,9 +254,7 @@
                 window.location.replace("https://sakhonmso.pongpoti.deno.net/external")
             }
         }
-
         longInLIFF()
-
     </script>
 </body>
 

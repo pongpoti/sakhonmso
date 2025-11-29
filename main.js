@@ -73,66 +73,61 @@ app.listen(port, () => {
 
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
-    .all(req.body.events.map(handleEvent))
+    .all(req.body.events.map((event) => {
+      const data = event.postback.data;
+      const userId = event.source.userId;
+      axios.post(
+        "https://api.line.me/v2/bot/chat/loading/start",
+        {
+          "chatId": userId,
+        },
+        {
+          headers: headers,
+        },
+      )
+        .then(() => {
+          if (data === "rm_status") {
+            client.pushMessage({
+              "to": userId,
+              "messages": [
+                {
+                  "type": "flex",
+                  "altText": "เลือกเดือนที่ต้องการ",
+                  "contents": assembleLists(),
+                },
+              ],
+            });
+          } else if (data === "rm_send") {
+            client.pushMessage({
+              "to": userId,
+              "messages": [
+                {
+                  "type": "text",
+                  "text": "บริการนี้ยังไม่เปิดใช้งาน",
+                },
+              ],
+            });
+          } else if (data === "rm_sign") {
+            client.pushMessage({
+              "to": userId,
+              "messages": [
+                {
+                  "type": "text",
+                  "text": "บริการนี้ยังไม่เปิดใช้งาน",
+                },
+              ],
+            });
+          } else {
+            console.log(data)
+          }
+        })
+        .catch((error) => console.error(error));
+    }))
     .then((result) => res.json(result))
     .catch((error) => console.error(error));
 });
 
-function handleEvent(event) {
-  const data = event.postback.data;
-  const userId = event.source.userId;
-  loadAnimation(userId);
-  if (data === "rm_status") {
-    console.log("RM_STATUS");
-    client.pushMessage({
-      "to": userId,
-      "messages": [
-        {
-          "type": "flex",
-          "altText": "เลือกเดือนที่ต้องการ",
-          "contents": assembleFullList(),
-        },
-      ],
-    });
-  } else if (data === "rm_send") {
-    client.pushMessage({
-      "to": userId,
-      "messages": [
-        {
-          "type": "text",
-          "text": "บริการนี้ยังไม่เปิดใช้งาน",
-        },
-      ],
-    });
-  } else if (data === "rm_sign") {
-    client.pushMessage({
-      "to": userId,
-      "messages": [
-        {
-          "type": "text",
-          "text": "บริการนี้ยังไม่เปิดใช้งาน",
-        },
-      ],
-    });
-  }
-}
-
-function loadAnimation(userId) {
-  axios.post(
-    "https://api.line.me/v2/bot/chat/loading/start",
-    {
-      "chatId": userId,
-    },
-    {
-      headers: headers,
-    },
-  )
-    .then()
-    .catch((error) => console.error(error));
-}
-
-function createMonthList(i) {
-  console.log("createMontList(): " + i);
+function createList(i) {
   const month = (new Date()).getMonth();
   const year = (new Date()).getFullYear() + 543;
   const iterator = month_iterator[month];
@@ -196,8 +191,7 @@ function createMonthList(i) {
   return object;
 }
 
-function assembleFullList() {
-  console.log("aassembleFullList()");
+function assembleLists() {
   const object = {
     "type": "bubble",
     "size": "mega",
@@ -242,9 +236,9 @@ function assembleFullList() {
       "type": "box",
       "layout": "vertical",
       "contents": [
-        createMonthList(0),
-        createMonthList(1),
-        createMonthList(2),
+        createList(0),
+        createList(1),
+        createList(2),
       ],
     },
   };
