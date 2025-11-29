@@ -151,6 +151,20 @@
         }
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
+        byname_input.addEventListener("change", function () {
+            if (this.checked) {
+                bydep_input.checked = false
+            } else {
+                bydep_input.checked = true
+            }
+        })
+        bydep_input.addEventListener("change", function () {
+            if (this.checked) {
+                byname_input.checked = false
+            } else {
+                byname_input.checked = true
+            }
+        })
         header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
                 tbody_searchable.removeChild(tbody_searchable.lastChild)
