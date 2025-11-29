@@ -48,9 +48,19 @@
                         <path d="m21 21-4.3-4.3"></path>
                     </g>
                 </svg>
-                <input id="header_search" type="search" required placeholder="ค้นหาชื่อแพทย์" pattern="^[ก-๏\s]+$"
+                <input id="header_search" type="search" required placeholder="พิมพ์เพื่อค้นหา.." pattern="^[ก-๏\s]+$"
                     autocomplete="off" disabled />
             </label>
+            <div class="flexi tems-center w-screen">
+                <div class="w-1/2">
+                    <input id="bydep" type="radio" class="radio" check="checked" />
+                    <label for="bydep">ชื่อกลุ่มงาน</label>
+                </div>
+                <div class="w-1/2">
+                    <input id="byname" type="radio" class="radio" check="checked" />
+                    <label for="byname">ชื่อแพทย์</label>
+                </div>
+            </div>
             <div id="header_note" class="text-xs text-base-300 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
             </div>
         </div>
