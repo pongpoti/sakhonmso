@@ -51,14 +51,14 @@
                 <input id="header_search" type="search" required placeholder="พิมพ์เพื่อค้นหา.." pattern="^[ก-๏\s]+$"
                     autocomplete="off" disabled />
             </label>
-            <div class="flexi tems-center w-screen">
+            <div class="flex items-center w-screen">
                 <div class="w-1/2">
-                    <input id="bydep" type="radio" class="radio" check="checked" />
-                    <label for="bydep">ชื่อกลุ่มงาน</label>
+                    <input id="bydep_input" type="radio" class="radio" checked="checked" />
+                    <label id="bydep_label" for="bydep_input" class="text-base-300">ชื่อกลุ่มงาน</label>
                 </div>
                 <div class="w-1/2">
-                    <input id="byname" type="radio" class="radio" check="checked" />
-                    <label for="byname">ชื่อแพทย์</label>
+                    <input id="byname_input" type="radio" class="radio" check="checked" />
+                    <label id="byname_label" for="byname_input" class="text-base-300">ชื่อแพทย์</label>
                 </div>
             </div>
             <div id="header_note" class="text-xs text-base-300 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
