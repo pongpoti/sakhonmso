@@ -57,7 +57,7 @@
     </div>
     <div id="content" class="grid grid-cols-1 justify-items-center mx-4">
         <div id="load" class="loading loading-dots loading-lg"></div>
-        <div id="pending" class="collapse collapse-arrow border bg-red-300 mb-4">
+        <div id="pending" class="collapse collapse-arrow border bg-base-300 mb-4">
             <input type="checkbox" />
             <div class="collapse-title text-lg font-semibold">รายชื่อผู้ที่ยังไม่ได้ส่ง</div>
             <div class="collapse-content">
@@ -96,7 +96,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
     <script>
         const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-        const par = new URLSearchParams(queryString).get("date")
+        const par_date = new URLSearchParams(queryString).get("date")
+        const par_color = new URLSearchParams(queryString).get("color")
         const header = document.getElementById("header")
         const header_count = document.getElementById("header_count")
         const header_display = document.getElementById("header_display")
@@ -199,18 +200,19 @@
                     if (liff.isLoggedIn()) {
                         header.style.display = "flex"
                         content.style.display = "grid"
-                        axios.get(url + par)
+                        axios.get(url + par_date)
                             .then(response => {
-                                sent.style.display = "grid"
-                                pending.style.display = "grid"
-                                header_display.innerText = displaying(par)
-                                header_display.classList.remove("skeleton", "skeleton-text")
+                                header_display.innerText = displaying(par_date)
+                                header_display.classList.remove("skeleton", "skeleton-text", "bg-base-300")
+                                header_display.classList.add(par_color)
                                 header_count.classList.remove("skeleton", "skeleton-text")
                                 header_search.disabled = false
                                 header_note.classList.remove("text-base-200")
                                 header_note.classList.add("text-black")
                                 load.style.display = "none"
                                 pending.style.display = "grid"
+                                pending.classList.remove("bg-base-300")
+                                pending.classList.add(par_color)
                                 sent.style.display = "grid"
                                 const data = response.data
                                 for (i = 0; i < data.length; i++) {
@@ -245,7 +247,7 @@
                             })
                             .catch((error) => console.error(error))
                     } else {
-                        liff.login({ redirectUri: "https://sakhonmso.pongpoti.deno.net/status?date=" + par })
+                        liff.login({ redirectUri: "https://sakhonmso.pongpoti.deno.net/status?date=" + par_date })
                     }
                 } else {
                     window.location.replace("https://sakhonmso.pongpoti.deno.net/external")

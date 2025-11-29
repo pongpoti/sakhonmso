@@ -118,7 +118,11 @@ app.post("/line", line.middleware(config), (req, res) => {
               ],
             });
           } else {
-            console.log(data)
+            const month = parseInt(data.slice(5))
+            const color = color_array[month - 1][0]
+            console.log("postback : " + data)
+            console.log("color : " + color)
+            res.redirect("https://liff.line.me/2008561527-a0xP1XmY?date=" + data + "&color=" + color)
           }
         })
         .catch((error) => console.error(error));
