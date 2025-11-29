@@ -72,7 +72,6 @@ app.listen(port, () => {
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map((event) => {
-      const data = event.postback.data;
       const userId = event.source.userId;
       axios.post(
         "https://api.line.me/v2/bot/chat/loading/start",
@@ -84,7 +83,7 @@ app.post("/line", line.middleware(config), (req, res) => {
         },
       )
         .then(() => {
-          if (data === "rm_status") {
+          if (event.postback.data === "rm_status") {
             client.pushMessage({
               "to": userId,
               "messages": [
@@ -95,7 +94,7 @@ app.post("/line", line.middleware(config), (req, res) => {
                 },
               ],
             });
-          } else if (data === "rm_send") {
+          } else if (event.postback.data === "rm_send") {
             client.pushMessage({
               "to": userId,
               "messages": [
@@ -105,7 +104,7 @@ app.post("/line", line.middleware(config), (req, res) => {
                 },
               ],
             });
-          } else if (data === "rm_sign") {
+          } else if (event.postback.data === "rm_sign") {
             client.pushMessage({
               "to": userId,
               "messages": [
