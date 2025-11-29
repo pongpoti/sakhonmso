@@ -214,6 +214,9 @@
                 byname_input.checked = true
             }
         })
+        header_search.addEventListener("focus", function () {
+            this.value = ""
+        }) 
         header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
                 tbody_searchable.removeChild(tbody_searchable.lastChild)
