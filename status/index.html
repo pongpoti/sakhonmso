@@ -188,6 +188,50 @@
                 }
             }
         }
+        const parting = (data) => {
+            if (data.length !== 0) {
+                for (i = 0; i < dep_array.length; i++) {
+                    let count = 0
+                    for (j = 0; j < data.length; j++) {
+                        if (data[j][2] === dep_array[i]) {
+                            count += 1
+                            if (count < 2) {
+                                let tr_header = document.createElement("tr")
+                                let td = document.createElement("td")
+                                td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg", "font-semibold")
+                                td.colSpan = 2
+                                if (dep_array[i] === "INTERN") {
+                                    td.innerText = dep_array[i]
+                                } else {
+                                    td.innerText = "กลุ่มงาน" + dep_array[i]
+                                }
+                                tbody_searchable.appendChild(tr_header).appendChild(td)
+                            }
+                            let tr_content = document.createElement("tr")
+                            let td_name = document.createElement("td")
+                            td_name.classList.add("text-lg")
+                            td_name.innerText = data[j][1] + "  (" + data[j][0] + ")"
+                            let td_status = document.createElement("td")
+                            let icon = document.createElement("i")
+                            if (data[j][3]) {
+                                icon.classList.add("fa-solid", "fa-check")
+                                count_true += 1
+                            } else {
+                                icon.style.color = "red"
+                                icon.classList.add("fa-solid", "fa-xmark")
+                                td_name.classList.add("text-red-700")
+                            }
+                            td_status.appendChild(icon)
+                            tr_content.appendChild(td_name)
+                            tr_content.appendChild(td_status)
+                            tbody_searchable.appendChild(tr_content)
+                        }
+                    }
+                }
+            } else {
+                searchable.style.display = "none"
+            }
+        }
         window.addEventListener("scroll", scrolling)
         backtotop.addEventListener("click", topping)
         byname_input.addEventListener("change", function () {
@@ -233,92 +277,10 @@
                 } else {
                     if (byname_input.checked) {
                         let data = arr.filter((elem) => elem[1].includes(this.value.trim()))
-                        if (data.length !== 0) {
-                            for (i = 0; i < dep_array.length; i++) {
-                                let count = 0
-                                for (j = 0; j < data.length; j++) {
-                                    if (data[j][2] === dep_array[i]) {
-                                        count += 1
-                                        if (count < 2) {
-                                            let tr_header = document.createElement("tr")
-                                            let td = document.createElement("td")
-                                            td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg", "font-semibold")
-                                            td.colSpan = 2
-                                            if (dep_array[i] === "INTERN") {
-                                                td.innerText = dep_array[i]
-                                            } else {
-                                                td.innerText = "กลุ่มงาน" + dep_array[i]
-                                            }
-                                            tbody_searchable.appendChild(tr_header).appendChild(td)
-                                        }
-                                        let tr_content = document.createElement("tr")
-                                        let td_name = document.createElement("td")
-                                        td_name.classList.add("text-lg")
-                                        td_name.innerText = data[j][1] + "  (" + data[j][0] + ")"
-                                        let td_status = document.createElement("td")
-                                        let icon = document.createElement("i")
-                                        if (data[j][3]) {
-                                            icon.classList.add("fa-solid", "fa-check")
-                                            count_true += 1
-                                        } else {
-                                            icon.style.color = "red"
-                                            icon.classList.add("fa-solid", "fa-xmark")
-                                            td_name.classList.add("text-red-700")
-                                        }
-                                        td_status.appendChild(icon)
-                                        tr_content.appendChild(td_name)
-                                        tr_content.appendChild(td_status)
-                                        tbody_searchable.appendChild(tr_content)
-                                    }
-                                }
-                            }
-                        } else {
-                            searchable.style.display = "none"
-                        }
+                        parting(data)
                     } else if (bydep_input.checked) {
                         let data = arr.filter((elem) => elem[2].includes(this.value.trim().toUpperCase()))
-                        if (data.length !== 0) {
-                            for (i = 0; i < dep_array.length; i++) {
-                                let count = 0
-                                for (j = 0; j < data.length; j++) {
-                                    if (data[j][2] === dep_array[i]) {
-                                        count += 1
-                                        if (count < 2) {
-                                            let tr_header = document.createElement("tr")
-                                            let td = document.createElement("td")
-                                            td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg", "font-semibold")
-                                            td.colSpan = 2
-                                            if (dep_array[i] === "INTERN") {
-                                                td.innerText = dep_array[i]
-                                            } else {
-                                                td.innerText = "กลุ่มงาน" + dep_array[i]
-                                            }
-                                            tbody_searchable.appendChild(tr_header).appendChild(td)
-                                        }
-                                        let tr_content = document.createElement("tr")
-                                        let td_name = document.createElement("td")
-                                        td_name.classList.add("text-lg")
-                                        td_name.innerText = data[j][1] + "  (" + data[j][0] + ")"
-                                        let td_status = document.createElement("td")
-                                        let icon = document.createElement("i")
-                                        if (data[j][3]) {
-                                            icon.classList.add("fa-solid", "fa-check")
-                                            count_true += 1
-                                        } else {
-                                            icon.style.color = "red"
-                                            icon.classList.add("fa-solid", "fa-xmark")
-                                            td_name.classList.add("text-red-700")
-                                        }
-                                        td_status.appendChild(icon)
-                                        tr_content.appendChild(td_name)
-                                        tr_content.appendChild(td_status)
-                                        tbody_searchable.appendChild(tr_content)
-                                    }
-                                }
-                            }
-                        } else {
-                            searchable.style.display = "none"
-                        }
+                        parting(data)
                     }
                 }
             } else {
