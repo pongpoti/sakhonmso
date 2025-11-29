@@ -53,11 +53,11 @@
             <div id="header_note" class="text-xs text-base-300 mt-1">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
             </div>
             <div class="grid grid-cols-2 justify-items-center w-full mt-4">
-                <div class="pr-2">
+                <div class="pl-6">
                     <input id="byname_input" type="radio" class="radio radio-sm mr-2" disabled />
                     <label id="byname_label" for="byname_input" class="text-base-300">ชื่อแพทย์</label>
                 </div>
-                <div class="pl-2">
+                <div class="pr-6">
                     <input id="bydep_input" type="radio" class="radio radio-sm mr-2" disabled />
                     <label id="bydep_label" for="bydep_input" class="text-base-300">ชื่อกลุ่มงาน</label>
                 </div>
@@ -320,7 +320,6 @@
                 sent.style.display = "grid"
                 searchable.style.display = "none"
             }
-
         })
         const longInLIFF = async () => {
             if (window.innerWidth < 481) {
