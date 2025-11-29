@@ -232,7 +232,7 @@
                     fulling()
                 } else {
                     if (byname_input.checked) {
-                        let data = arr.filter((elem) => elem[1].includes(this.value.trim().toLowerCase()))
+                        let data = arr.filter((elem) => elem[1].includes(this.value.trim()))
                         if (data.length !== 0) {
                             for (i = 0; i < dep_array.length; i++) {
                                 let count = 0
@@ -276,7 +276,7 @@
                             searchable.style.display = "none"
                         }
                     } else if (bydep_input.checked) {
-                        let data = arr.filter((elem) => elem[2].includes(this.value.trim().toLowerCase()))
+                        let data = arr.filter((elem) => elem[2].includes(this.value.trim().toUpperCase()))
                         if (data.length !== 0) {
                             let count = 0
                             for (i = 0; i < data.length; i++) {
