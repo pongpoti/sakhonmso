@@ -238,6 +238,7 @@
             pending.style.display = "grid"
             sent.style.display = "grid"
             searchable.style.display = "none"
+            topping()
             if (this.checked) {
                 bydep_input.checked = false
                 header_search.disabled = false
@@ -250,6 +251,7 @@
             pending.style.display = "grid"
             sent.style.display = "grid"
             searchable.style.display = "none"
+            topping()
             if (this.checked) {
                 byname_input.checked = false
                 header_search.disabled = false
@@ -263,6 +265,7 @@
             sent.style.display = "grid"
             searchable.style.display = "none"
             this.value = ""
+            topping()
         })
         header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
