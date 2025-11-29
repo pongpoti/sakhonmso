@@ -39,19 +39,25 @@
             </div>
         </div>
         <div class="grid grid-cols-1 justify-items-center w-screen p-4">
-            <label class="floating-label">
-                <span>พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมด</span>
+            <label class="input">
+                <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                        stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
                 <input id="header_search" type="search" required placeholder="พิมพ์เพื่อค้นหา.." autocomplete="off"
                     disabled />
             </label>
-            <div id="header_note" class="text-xs text-base-300 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
+            <div id="header_note" class="text-xs text-base-300 mt-1">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
             </div>
             <div class="grid grid-cols-2 justify-items-center w-full mt-4">
-                <div>
+                <div class="pr-2">
                     <input id="byname_input" type="radio" class="radio radio-sm mr-2" disabled />
                     <label id="byname_label" for="byname_input" class="text-base-300">ชื่อแพทย์</label>
                 </div>
-                <div>
+                <div class="pl-2">
                     <input id="bydep_input" type="radio" class="radio radio-sm mr-2" disabled />
                     <label id="bydep_label" for="bydep_input" class="text-base-300">ชื่อกลุ่มงาน</label>
                 </div>
@@ -207,9 +213,6 @@
             } else {
                 byname_input.checked = true
             }
-        })
-        header_search.addEventListener("focus", function () {
-            this.value = ""
         })
         header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
