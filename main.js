@@ -117,12 +117,6 @@ app.post("/line", line.middleware(config), (req, res) => {
                 },
               ],
             });
-          } else {
-            const month = parseInt(data.slice(5))
-            const color = color_array[month - 1][0]
-            console.log("postback : " + data)
-            console.log("color : " + color)
-            res.redirect("https://liff.line.me/2008561527-a0xP1XmY?date=" + data + "&color=" + color)
           }
         })
         .catch((error) => console.error(error));
@@ -136,8 +130,9 @@ function createList(i) {
   const year = (new Date()).getFullYear() + 543;
   const iterator = month_iterator[month];
   const name = month_array[iterator[i][0]] + " " + (year + iterator[i][1]);
-  const color = color_array[iterator[i][0]][1];
-  const postback = (year + iterator[i][1]) + "_" + (iterator[i][0] + 1);
+  const color_hex = color_array[iterator[i][0]][1];
+  const color_tw = color_array[iterator[i][0]][0];
+  const date = (year + iterator[i][1]) + "_" + (iterator[i][0] + 1);
   const object = {
     "type": "box",
     "layout": "horizontal",
@@ -155,9 +150,9 @@ function createList(i) {
             "weight": "bold",
           },
         ],
-        "backgroundColor": color,
+        "backgroundColor": color_hex,
         "cornerRadius": "sm",
-        "borderColor": color,
+        "borderColor": color_hex,
         "borderWidth": "semi-bold",
         "flex": 3,
         "paddingAll": "md",
@@ -183,9 +178,9 @@ function createList(i) {
         "flex": 1,
         "paddingAll": "md",
         "action": {
-          "type": "postback",
-          "label": postback,
-          "data": postback,
+          "type": "uri",
+          "label": date,
+          "uri": "https://liff.line.me/2008561527-a0xP1XmY?date=" + date + "&color=" + color_tw,
         },
       },
     ],
