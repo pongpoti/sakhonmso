@@ -215,13 +215,15 @@
             }
         })
         header_search.addEventListener("focus", function () {
+            pending.style.display = "grid"
+            sent.style.display = "grid"
+            searchable.style.display = "none"
             this.value = ""
-        }) 
+        })
         header_search.addEventListener("input", function () {
             while (tbody_searchable.firstChild) {
                 tbody_searchable.removeChild(tbody_searchable.lastChild)
             }
-            //this.value = this.value.replace(/[^\u0E00-\u0E7F ]/, "")
             if (this.value !== "") {
                 pending.style.display = "none"
                 sent.style.display = "none"
@@ -230,7 +232,7 @@
                     fulling()
                 } else {
                     if (byname_input.checked) {
-                        let data = arr.filter((elem) => elem[1].includes(this.value.trim()))
+                        let data = arr.filter((elem) => elem[1].includes(this.value.trim().toLowerCase()))
                         if (data.length !== 0) {
                             for (i = 0; i < dep_array.length; i++) {
                                 let count = 0
@@ -274,7 +276,7 @@
                             searchable.style.display = "none"
                         }
                     } else if (bydep_input.checked) {
-                        let data = arr.filter((elem) => elem[2].includes(this.value.trim()))
+                        let data = arr.filter((elem) => elem[2].includes(this.value.trim().toLowerCase()))
                         if (data.length !== 0) {
                             let count = 0
                             for (i = 0; i < data.length; i++) {
