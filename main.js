@@ -1,10 +1,8 @@
 import express from "express";
-import process from "node:process";
 import * as line from "@line/bot-sdk";
 import axios from "axios";
 
 const app = express();
-const port = process.env.PORT || 3030;
 const headers = {
   "Content-Type": "application/json",
   "Authorization":
@@ -66,10 +64,6 @@ const month_iterator = [
 
 app.use("/status", express.static("status"));
 app.use("/external", express.static("external"));
-
-app.listen(port, () => {
-  console.log(".. 3030 ..");
-});
 
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
