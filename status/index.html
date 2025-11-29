@@ -155,54 +155,56 @@
             while (tbody_searchable.firstChild) {
                 tbody_searchable.removeChild(tbody_searchable.lastChild)
             }
-            this.value = this.value.replace(/[^\u0E00-\u0E7F ]/, "")
-            if (this.value !== "") {
-                pending.style.display = "none"
-                sent.style.display = "none"
-                searchable.style.display = "grid"
-                let data = arr.filter((elem) => elem[1].includes(this.value.trim()))
-                if (data.length !== 0) {
-                    for (i = 0; i < dep_array.length; i++) {
-                        let count = 0
-                        for (j = 0; j < data.length; j++) {
-                            if (data[j][2] === dep_array[i]) {
-                                count += 1
-                                if (count < 2) {
-                                    let tr_header = document.createElement("tr")
-                                    let td = document.createElement("td")
-                                    td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg", "font-semibold")
-                                    td.colSpan = 2
-                                    td.innerText = "กลุ่มงาน" + dep_array[i]
-                                    tbody_searchable.appendChild(tr_header).appendChild(td)
+            //this.value = this.value.replace(/[^\u0E00-\u0E7F ]/, "")
+            if (byname_input.checked) {
+                if (this.value !== "") {
+                    pending.style.display = "none"
+                    sent.style.display = "none"
+                    searchable.style.display = "grid"
+                    let data = arr.filter((elem) => elem[1].includes(this.value.trim()))
+                    if (data.length !== 0) {
+                        for (i = 0; i < dep_array.length; i++) {
+                            let count = 0
+                            for (j = 0; j < data.length; j++) {
+                                if (data[j][2] === dep_array[i]) {
+                                    count += 1
+                                    if (count < 2) {
+                                        let tr_header = document.createElement("tr")
+                                        let td = document.createElement("td")
+                                        td.classList.add("bg-amber-900", "text-white", "text-center", "text-lg", "font-semibold")
+                                        td.colSpan = 2
+                                        td.innerText = "กลุ่มงาน" + dep_array[i]
+                                        tbody_searchable.appendChild(tr_header).appendChild(td)
+                                    }
+                                    let tr_content = document.createElement("tr")
+                                    let td_name = document.createElement("td")
+                                    td_name.classList.add("text-lg")
+                                    td_name.innerText = data[j][1] + "  (" + data[j][0] + ")"
+                                    let td_status = document.createElement("td")
+                                    let icon = document.createElement("i")
+                                    if (data[j][3]) {
+                                        icon.classList.add("fa-solid", "fa-check")
+                                        count_true += 1
+                                    } else {
+                                        icon.style.color = "red"
+                                        icon.classList.add("fa-solid", "fa-xmark")
+                                        td_name.classList.add("text-red-700")
+                                    }
+                                    td_status.appendChild(icon)
+                                    tr_content.appendChild(td_name)
+                                    tr_content.appendChild(td_status)
+                                    tbody_searchable.appendChild(tr_content)
                                 }
-                                let tr_content = document.createElement("tr")
-                                let td_name = document.createElement("td")
-                                td_name.classList.add("text-lg")
-                                td_name.innerText = data[j][1] + "  (" + data[j][0] + ")"
-                                let td_status = document.createElement("td")
-                                let icon = document.createElement("i")
-                                if (data[j][3]) {
-                                    icon.classList.add("fa-solid", "fa-check")
-                                    count_true += 1
-                                } else {
-                                    icon.style.color = "red"
-                                    icon.classList.add("fa-solid", "fa-xmark")
-                                    td_name.classList.add("text-red-700")
-                                }
-                                td_status.appendChild(icon)
-                                tr_content.appendChild(td_name)
-                                tr_content.appendChild(td_status)
-                                tbody_searchable.appendChild(tr_content)
                             }
                         }
+                    } else {
+                        searchable.style.display = "none"
                     }
                 } else {
+                    pending.style.display = "grid"
+                    sent.style.display = "grid"
                     searchable.style.display = "none"
                 }
-            } else {
-                pending.style.display = "grid"
-                sent.style.display = "grid"
-                searchable.style.display = "none"
             }
         })
         const longInLIFF = async () => {
@@ -223,6 +225,10 @@
                                 header_search.disabled = false
                                 header_note.classList.remove("text-base-200")
                                 header_note.classList.add("text-black")
+                                byname_input.disabled = false
+                                byname_label.classList.remove("text-base-300")
+                                bydep_input.disabled = false
+                                bydep_label.classList.remove("text-base-300")
                                 load.style.display = "none"
                                 pending.style.display = "grid"
                                 pending.classList.remove("bg-base-300")
