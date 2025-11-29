@@ -38,7 +38,6 @@
                 รวบรวมข้อมูล..
             </div>
         </div>
-        <!--searchbox-->
         <div class="grid grid-cols-1 justify-items-center w-screen p-4">
             <label class="input">
                 <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -55,7 +54,7 @@
             </div>
             <div class="grid grid-cols-2 justify-items-center w-full mt-4">
                 <div>
-                    <input id="byname_input" type="radio" class="radio radio-sm mr-2" checked="checked" disabled />
+                    <input id="byname_input" type="radio" class="radio radio-sm mr-2" disabled />
                     <label id="byname_label" for="byname_input" class="text-base-300">ชื่อแพทย์</label>
                 </div>
                 <div>
@@ -154,6 +153,8 @@
         byname_input.addEventListener("change", function () {
             if (this.checked) {
                 bydep_input.checked = false
+                header_search.disabled = false
+                header_search.value = ""
             } else {
                 bydep_input.checked = true
             }
@@ -161,6 +162,8 @@
         bydep_input.addEventListener("change", function () {
             if (this.checked) {
                 byname_input.checked = false
+                header_search.disabled = false
+                header_search.value = ""
             } else {
                 byname_input.checked = true
             }
@@ -236,7 +239,6 @@
                                 header_display.classList.remove("skeleton", "skeleton-text", "bg-base-300")
                                 header_display.classList.add(par_color)
                                 header_count.classList.remove("skeleton", "skeleton-text")
-                                header_search.disabled = false
                                 header_note.classList.remove("text-base-200")
                                 header_note.classList.add("text-black")
                                 byname_input.disabled = false
