@@ -51,17 +51,17 @@
                 <input id="header_search" type="search" required placeholder="พิมพ์เพื่อค้นหา.." pattern="^[ก-๏\s]+$"
                     autocomplete="off" disabled />
             </label>
-            <div class="grid grid-cols-2 justify-items-center w-full mt-2">
+            <div class="grid grid-cols-2 justify-items-center w-full rounded-b-md border border-base-300 mt-2">
+                <div>
+                    <input id="byname_input" type="radio" class="radio mr-2" checked="checked" disabled />
+                    <label id="byname_label" for="byname_input" class="text-base-300">ชื่อแพทย์</label>
+                </div>
                 <div>
                     <input id="bydep_input" type="radio" class="radio mr-2" disabled />
                     <label id="bydep_label" for="bydep_input" class="text-base-300">ชื่อกลุ่มงาน</label>
                 </div>
-                <div>
-                    <input id="byname_input" type="radio" class="radio mr-2" disabled />
-                    <label id="byname_label" for="byname_input" class="text-base-300">ชื่อแพทย์</label>
-                </div>
             </div>
-            <div id="header_note" class="text-sm text-base-300 mt-2">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
+            <div id="header_note" class="text-sm text-base-300 mt-4">พิมพ์เว้นวรรคเพื่อดูรายชื่อทั้งหมดเรียงตามกลุ่มงาน
             </div>
         </div>
     </div>
@@ -113,6 +113,10 @@
         const header_display = document.getElementById("header_display")
         const header_search = document.getElementById("header_search")
         const header_note = document.getElementById("header_note")
+        const byname_input = document.getElementById("byname_input")
+        const byname_label = document.getElementById("byname_label")
+        const bydep_input = document.getElementById("bydep_input")
+        const bydep_label = document.getElementById("bydep_label")
         const content = document.getElementById("content")
         const load = document.getElementById("load")
         const pending = document.getElementById("pending")
