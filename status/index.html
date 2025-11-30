@@ -236,7 +236,9 @@
         backtotop.addEventListener("click", topping)
         byname_input.addEventListener("change", function () {
             pending.style.display = "grid"
+            pending.firstChild.checked = false
             sent.style.display = "grid"
+            sent.firstChild.checked = false
             searchable.style.display = "none"
             topping()
             if (this.checked) {
@@ -248,7 +250,9 @@
         })
         bydep_input.addEventListener("change", function () {
             pending.style.display = "grid"
+            pending.firstChild.checked = false
             sent.style.display = "grid"
+            sent.firstChild.checked = false
             searchable.style.display = "none"
             topping()
             if (this.checked) {
@@ -260,7 +264,9 @@
         })
         header_search.addEventListener("focus", function () {
             pending.style.display = "grid"
+            pending.firstChild.checked = false
             sent.style.display = "grid"
+            sent.firstChild.checked = false
             searchable.style.display = "none"
             this.value = ""
         })
